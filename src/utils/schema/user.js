@@ -1,7 +1,7 @@
 const { check } = require('express-validator')
 
 const detailUserValidation = () => {
-  return [check('first_name').notEmpty().isInt()]
+  return [check('id').notEmpty().isInt()]
 }
 
 const updateUserValidation = () => {
