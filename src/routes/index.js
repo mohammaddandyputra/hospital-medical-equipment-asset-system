@@ -18,8 +18,8 @@ const AuthController = require('../controllers/auth')
 //* *************************************************************
 
 // Auth
-router.post('/login', signInValidation, AuthController.signIn)
-router.post('/register', signUpValidation, AuthController.signUp)
+router.post('/login', signInValidation(), AuthController.signIn)
+router.post('/register', signUpValidation(), AuthController.signUp)
 router.get('/verify-account', AuthController.verify)
 
 router.use(verifyJWT)

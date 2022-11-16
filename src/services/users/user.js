@@ -1,12 +1,19 @@
 const { UserModel } = require('../../models')
 const _ = require('lodash')
+const { pagination } = require('../../utils')
 
-const userList = async () => {
+const userList = async (req) => {
   try {
+    // const { page, page_size } = req
     const attributes = ['id', 'first_name', 'last_name', 'email']
-    const data = await UserModel.findAll({ attributes })
+    const users = await UserModel.findAll({ attributes })
 
-    return Promise.resolve(data)
+    // const response = {
+    //   data: users,
+    //   pagination: pagination(users.length, page, page_size, '/users/')
+    // }
+
+    return Promise.resolve(users)
   } catch (error) {
     return Promise.reject(error)
   }
