@@ -1,16 +1,23 @@
-const { responseSuccess, responseFailed } = require('../../utils')
+const { responseSuccess, responseErrorValidate } = require('../../utils')
 const { logIn, register, verifyAccount } = require('../../services')
+const { validationResult } = require('express-validator')
 
-const signIn = async (req, res) => {
+const signIn = async (req, res, next) => {
   try {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return responseErrorValidate(res, errors.array(), 422)
+    }
+
     const data = await logIn({ ...req.body })
     return responseSuccess(res, 'User found', data, 200)
   } catch (error) {
-    return responseFailed(res, error.message, error.errorCode)
+    next(error)
   }
 }
 
-const signUp = async (req, res) => {
+const signUp = async (req, res, next) => {
   try {
     const { message, data, code } = await register({
       ...req.body,
@@ -23,17 +30,17 @@ const signUp = async (req, res) => {
 
     return responseSuccess(res, message, data, code)
   } catch (error) {
-    return responseFailed(res, error.message, error.errorCode)
+    next(error)
   }
 }
 
-const verify = async (req, res) => {
+const verify = async (req, res, next) => {
   try {
     const data = await verifyAccount({ token: req.query.token })
 
     return responseSuccess(res, 'Verification successful', data, 200)
   } catch (error) {
-    return responseFailed(res, error.message, error.errorCode)
+    next(error)
   }
 }
 

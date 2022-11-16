@@ -23,6 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     token: {
       type: DataTypes.STRING
     },
+    expired_at: {
+      type: DataTypes.DATE
+    },
     deleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
