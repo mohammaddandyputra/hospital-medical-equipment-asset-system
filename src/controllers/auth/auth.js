@@ -19,6 +19,12 @@ const signIn = async (req, res, next) => {
 
 const signUp = async (req, res, next) => {
   try {
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return responseErrorValidate(res, errors.array(), 422)
+    }
+
     const { message, data, code } = await register({
       ...req.body,
       ...{
