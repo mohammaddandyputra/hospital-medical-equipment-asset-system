@@ -4,7 +4,13 @@ const ErrorHandler = require('../utils/error')
 const { verifyJWT } = require('../app/middleware/verifyJWT')
 
 // Schema Validation
-const { updateUserValidation, detailUserValidation, signInValidation, signUpValidation } = require('../utils/schema')
+const {
+  updateUserValidation,
+  detailUserValidation,
+  signInValidation,
+  signUpValidation,
+  getUserListValidation
+} = require('../utils/schema')
 
 // Controllers
 const UserController = require('../controllers/users')
@@ -31,7 +37,7 @@ router.use(verifyJWT)
 //* *************************************************************
 
 // Users
-router.get('/users', UserController.getUserList)
+router.get('/users', getUserListValidation(), UserController.getUserList)
 router.get('/users/:id', detailUserValidation(), UserController.getUserDetail)
 router.patch('/users/:id', updateUserValidation(), UserController.updateUser)
 

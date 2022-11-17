@@ -4,7 +4,13 @@ const { validationResult } = require('express-validator')
 
 const getUserList = async (req, res, next) => {
   try {
-    const data = await userList()
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return responseErrorValidate(res, errors.array(), 422)
+    }
+
+    const data = await userList({ ...req.query, page: req.query.page })
     return responseSuccess(res, 'User Lists', data, 200)
   } catch (error) {
     next(error)
@@ -13,8 +19,13 @@ const getUserList = async (req, res, next) => {
 
 const getUserDetail = async (req, res, next) => {
   try {
-    const id = req.params.id
-    const data = await userDetail(id)
+    const errors = validationResult(req)
+
+    if (!errors.isEmpty()) {
+      return responseErrorValidate(res, errors.array(), 422)
+    }
+
+    const data = await userDetail({ ...req.params })
     return responseSuccess(res, 'User Detail', data, 200)
   } catch (error) {
     next(error)
@@ -29,9 +40,8 @@ const updateUser = async (req, res, next) => {
       return responseErrorValidate(res, errors.array(), 422)
     }
 
-    const id = req.params.id
     const data = await updateUserDetail({
-      id,
+      ...req.params,
       ...req.body
     })
 

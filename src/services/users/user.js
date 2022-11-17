@@ -4,23 +4,29 @@ const { pagination } = require('../../utils')
 
 const userList = async (req) => {
   try {
-    // const { page, page_size } = req
+    const { page, page_size } = req
+
+    const limit = page_size
+    const offset = (page - 1) * page_size
     const attributes = ['id', 'first_name', 'last_name', 'email']
-    const users = await UserModel.findAll({ attributes })
+    const order = [['id', 'ASC']]
 
-    // const response = {
-    //   data: users,
-    //   pagination: pagination(users.length, page, page_size, '/users/')
-    // }
+    const users = await UserModel.findAndCountAll({ attributes, limit, offset, order })
 
-    return Promise.resolve(users)
+    const response = {
+      data: users,
+      pagination: pagination(users.count, page_size, page, '/users/')
+    }
+
+    return Promise.resolve(response)
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
-const userDetail = async (id) => {
+const userDetail = async (req) => {
   try {
+    const { id } = req
     const attributes = ['id', 'first_name', 'last_name', 'email']
     const data = await UserModel.findByPk(id, { attributes })
 

@@ -1,12 +1,12 @@
 const db = require('./db')
 
 module.exports = {
-  username: db.USER,
-  password: db.PASSWORD,
-  database: db.DB,
+  username: db.username,
+  password: db.password,
+  database: db.database,
   config: {
     database: {
-      host: db.HOST,
+      host: db.host,
       dialect: db.dialect
     }
   }
