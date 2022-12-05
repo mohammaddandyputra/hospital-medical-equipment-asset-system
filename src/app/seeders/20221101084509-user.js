@@ -15,6 +15,18 @@ module.exports = {
       email: 'elydha@gmail.com',
       password: bcrypt.hashSync('123123', 10),
       verify: false
+    }, {
+      first_name: 'Mohammad Khalid',
+      last_name: 'Abidzar',
+      email: 'khalid@gmail.com',
+      password: bcrypt.hashSync('123123', 10),
+      verify: false
+    }, {
+      first_name: 'Mohammad Alfatih',
+      last_name: 'Muslim',
+      email: 'alfatih@gmail.com',
+      password: bcrypt.hashSync('123123', 10),
+      verify: false
     }], {})
   },
 

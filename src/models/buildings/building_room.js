@@ -1,7 +1,9 @@
-'use strict'
 const {
   Model
 } = require('sequelize')
+
+const { MedicalEquipment } = require('..')
+
 module.exports = (sequelize, DataTypes) => {
   class BuildingRoom extends Model {
     /**
@@ -61,5 +63,8 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: false,
     updatedAt: false
   })
+
+  BuildingRoom.belongsTo(MedicalEquipment)
+
   return BuildingRoom
 }
